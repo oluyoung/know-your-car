@@ -27,9 +27,12 @@ def construct_index():
 def chatbot(input_text):
     storage_context = StorageContext.from_defaults('./storage')
     index = load_index_from_storage(storage_context)
-    # index = VectorStoreIndex.load_from_disk('index_store.json')
-    response = index.query(input_text, response_mode="compact")
-    return response.response
+    # index = VectorStoreIndex.load_from_disk()
+    # response = index.query(input_text, response_mode="compact")
+    query_engine = index.as_query_engine()
+    response = query_engine.query(input_text)
+    return response
+
 
 iface = gr.Interface(fn=chatbot,
                      inputs=gr.components.Textbox(lines=7, label="Enter your text"),
