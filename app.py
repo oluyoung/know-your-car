@@ -24,6 +24,8 @@ def construct_index():
 
     return index
 
+index = construct_index()
+
 def chatbot(input_text):
     storage_context = StorageContext.from_defaults('./storage')
     index = load_index_from_storage(storage_context)
@@ -39,5 +41,4 @@ iface = gr.Interface(fn=chatbot,
                      outputs="text",
                      title="Custom-trained AI Chatbot")
 
-index = construct_index()
 iface.launch(share=True)
